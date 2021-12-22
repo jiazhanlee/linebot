@@ -24,9 +24,9 @@ import time
 app = Flask(__name__)
 static_tmp_path = os.path.join(os.path.dirname(__file__), 'static', 'tmp')
 # Channel Access Token
-line_bot_api = LineBotApi('你的Channel AcessToken')
+line_bot_api = LineBotApi('LuPIwCBAyHeODvMDw1iMRNnIWCv9hI8mPMhFXIfmy9R/GYb93mBtKhoZ6tpSdTjN54I5x5xYoljZx+aw3qs8C3JDwkHKAQRtnlN/04rdF8wqfvrQQpEL9mNDwaUXIEy7rVGS517LIn9K6TBgeVEO3QdB04t89/1O/w1cDnyilFU=')
 # Channel Secret
-handler = WebhookHandler('你的Channel Secret')
+handler = WebhookHandler('0ed276cf24dc7a616b58febc28d9602d')
 
 
 # 監聽所有來自 /callback 的 Post Request
@@ -65,11 +65,24 @@ def handle_message(event):
         message = test()
         line_bot_api.reply_message(event.reply_token, message)
     elif '功能列表' in msg:
-        message = function_list()
+        message = TextSendMessage("功能列表:\n最新合作廠商\n最新活動訊息\n註冊會員\n圖片\n輸入等於符號加上關鍵字為搜尋產品\n其餘輸入則無效")
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '查詢其他功能' in msg:
+        message = TextSendMessage("功能列表:\n最新合作廠商\n最新活動訊息\n註冊會員\n圖片\n輸入等於符號加上關鍵字為搜尋產品\n其餘輸入則無效")
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '有哪些抽獎品項呢' in msg:
+        message = TextSendMessage("https://shopee.tw/")
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '現在、立刻、馬上' in msg:
+        message = TextSendMessage("https://shopee.tw/buyer/signup")
+        line_bot_api.reply_message(event.reply_token, message)
+    elif '=' in msg:
+        message = TextSendMessage("https://shopee.tw/search?keyword"+msg)
         line_bot_api.reply_message(event.reply_token, message)
     else:
-        message = TextSendMessage(text=msg)
+        message = TextSendMessage('無效!請輸入功能列表查詢指令!')
         line_bot_api.reply_message(event.reply_token, message)
+
 
 @handler.add(PostbackEvent)
 def handle_message(event):
